@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgres"
   url      = env("DATABASE_URL")
 }
 
@@ -56,7 +56,7 @@ model Athlete {
   paddleSide    String              @db.VarChar(255)
   weight        Int?
   email         String              @unique @db.VarChar(255)
-  notes         String              @db.MediumText
+  notes         String              @unique @db.VarChar(255)
   isAvailable   Boolean
   isManager     Boolean
   createdAt     DateTime            @default(now())
@@ -206,7 +206,7 @@ model LineupPlanSection {
 model NotesPlanSection {
   id        String  @id
   notesName String?
-  notesBody String? @db.MediumText
+  notesBody String? @unique @db.VarChar(255)  
 
   RacePlan   RacePlan? @relation(fields: [racePlanId], references: [id], onDelete: Cascade)
   racePlanId String?
